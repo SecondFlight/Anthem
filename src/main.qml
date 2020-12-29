@@ -21,8 +21,7 @@
 import QtQuick 2.14
 import QtQuick.Window 2.14
 import QtQuick.Shapes 1.14
-import QtGraphicalEffects 1.14
-import QtQuick.Dialogs 1.2
+//import QtGraphicalEffects 1.14
 import "BasicComponents"
 import "BasicComponents/GenericTooltip"
 import "Dialogs"
@@ -123,26 +122,26 @@ Window {
         }
     }
 
-    Image {
-        id: asdf
-        source: "file:///C:\\Users\\qbgee\\Pictures\\background.jpg"
-        width: Screen.width
-        height: Screen.height
-        fillMode: Image.PreserveAspectCrop
-        visible: false
-    }
-    FastBlur {
-        id: blurredbg
-        visible: true
-        anchors.fill: asdf
-        source: asdf
-        radius: 128
-        opacity: 0.3
-    }
-    Rectangle {
-        anchors.fill: parent
-        color: colors.black_30
-    }
+//    Image {
+//        id: asdf
+//        source: "file:///C:\\Users\\qbgee\\Pictures\\background.jpg"
+//        width: Screen.width
+//        height: Screen.height
+//        fillMode: Image.PreserveAspectCrop
+//        visible: false
+//    }
+//    FastBlur {
+//        id: blurredbg
+//        visible: true
+//        anchors.fill: asdf
+//        source: asdf
+//        radius: 128
+//        opacity: 0.3
+//    }
+//    Rectangle {
+//        anchors.fill: parent
+//        color: colors.black_30
+//    }
 
     Item {
         id: header

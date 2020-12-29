@@ -19,7 +19,7 @@
 */
 
 import QtQuick 2.14
-import QtGraphicalEffects 1.14
+//import QtGraphicalEffects 1.14
 import io.github.anthem.utilities.mousehelper 1.0
 
 /*
@@ -419,7 +419,7 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
 
-        visible: false
+//        visible: false
 
         Repeater {
             id: menuContentRepeater
@@ -527,16 +527,16 @@ Item {
         }
     }
 
-    Rectangle {
-        id: mask
-        anchors.fill: parent
-        radius: 6
-        visible: false
-    }
+//    Rectangle {
+//        id: mask
+//        anchors.fill: parent
+//        radius: 6
+//        visible: false
+//    }
 
-    OpacityMask {
-        anchors.fill: parent
-        source: menuContent
-        maskSource: mask
-    }
+//    OpacityMask {
+//        anchors.fill: parent
+//        source: menuContent
+//        maskSource: mask
+//    }
 }

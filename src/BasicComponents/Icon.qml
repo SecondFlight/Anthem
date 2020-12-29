@@ -19,7 +19,7 @@
 */
 
 import QtQuick 2.15
-import QtGraphicalEffects 1.15
+//import QtGraphicalEffects 1.15
 import QtQuick.Window 2.15
 
 Item {
@@ -43,7 +43,7 @@ Item {
         sourceSize.width: imageWidth
         sourceSize.height: imageHeight
         fillMode: Image.Pad
-        visible: false
+//        visible: false
         sourceClipRect:
             Qt.rect(
                 -1,
@@ -52,10 +52,10 @@ Item {
                 imageHeight * Screen.devicePixelRatio + 2
             )
     }
-    ColorOverlay {
-        anchors.fill: image
-        source: image
-        visible: true
-        color: icon.color
-    }
+//    ColorOverlay {
+//        anchors.fill: image
+//        source: image
+//        visible: true
+//        color: icon.color
+//    }
 }

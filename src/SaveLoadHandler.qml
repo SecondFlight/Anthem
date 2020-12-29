@@ -19,7 +19,7 @@
 */
 
 import QtQuick 2.14
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.1
 import "Dialogs"
 
 import Anthem 1.0
@@ -98,7 +98,7 @@ Item {
     FileDialog {
         id: saveFileDialog
         title: qsTr("Save as")
-        selectExisting: false
+//        selectExisting: false
         folder: shortcuts.home
         nameFilters: [`${qsTr('Anthem project files')} (*.anthem)`]
         onAccepted: {
@@ -118,7 +118,7 @@ Item {
     FileDialog {
         id: loadFileDialog
         title: qsTr("Select a project")
-        selectExisting: true
+//        selectExisting: true
         folder: shortcuts.home
         nameFilters: [`${qsTr('Anthem project files')} (*.anthem)`]
         onAccepted: {
