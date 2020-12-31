@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2019 Joshua Wade
+    Copyright (C) 2019, 2020 Joshua Wade
 
     This file is part of Anthem.
 
@@ -195,6 +195,45 @@ Column {
 
                     PathLine { x: arrow.width; y: arrow.height * 0.5; }
                     PathLine { x: arrow.width * 0.5; y: arrow.height; }
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    selectedIndex = index + startIndex;
+                    attemptedSelectedIndex = index + startIndex;
+
+                    globalStore.statusMessage = modelData.hoverText ? modelData.hoverText : '';
+
+                    if (openedSubmenuIndex > -1 && !blockSubmenuClose) {
+                        closeSubmenus(id);
+                        openedSubmenuIndex = -1;
+                    }
+
+                    if (modelData.separator || modelData.disabled) {
+                        return;
+                    }
+
+                    if (columnItems[index].submenu) {
+                        openSubmenuAt(index + startIndex, 500);
+                    }
+                }
+                onPressed: {
+                    if (columnItems[index].separator || columnItems[index].disabled) {
+                        return;
+                    }
+
+                    if (menuItems[index + startIndex].onTriggered) {
+                        menuItems[index + startIndex].onTriggered();
+                    }
+                    if (columnItems[index].submenu) {
+                        openSubmenuAt(index + startIndex);
+                    }
+                    else
+                        closeAll();
                 }
             }
         }

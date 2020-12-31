@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2019 Joshua Wade
+    Copyright (C) 2019, 2020 Joshua Wade
 
     This file is part of Anthem.
 
@@ -19,7 +19,6 @@
 */
 
 import QtQuick 2.14
-//import QtGraphicalEffects 1.14
 import io.github.anthem.utilities.mousehelper 1.0
 
 /*
@@ -414,20 +413,56 @@ Item {
         return result;
     }
 
-    Row {
-        id: menuContent
-        anchors.top: parent.top
-        anchors.left: parent.left
 
-//        visible: false
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onExited: {
+            globalStore.statusMessage = '';
 
-        Repeater {
-            id: menuContentRepeater
-            model: _processedMenuItems
+            if (openedSubmenuIndex > -1) {
+                if (blockSubmenuClose) {
+                    selectedIndex = openedSubmenuIndex;
 
-            MenuColumn {
-                columnItems: modelData
-                startIndex: getStartIndex(index)
+                    // If the user moved to a submenu, make sure the
+                    // blockSubmenuClose reset timer doesn't close their
+                    // submenu when the timer runs out
+                    attemptedSelectedIndex = selectedIndex;
+
+                    return;
+                }
+                else {
+                    closeSubmenus(id);
+                    openedSubmenuIndex = -1;
+                }
+            }
+
+            selectedIndex = -1;
+        }
+
+        onWheel: {
+            if (openedSubmenuIndex > -1) {
+                moveMouseToSubmenu(id);
+                return;
+            }
+
+            let direction = wheel.angleDelta.y < 0 ? -1 : 1;
+            incrementIndex(direction, true);
+        }
+
+        Row {
+            id: menuContent
+            anchors.top: parent.top
+            anchors.left: parent.left
+
+            Repeater {
+                id: menuContentRepeater
+                model: _processedMenuItems
+
+                MenuColumn {
+                    columnItems: modelData
+                    startIndex: getStartIndex(index)
+                }
             }
         }
     }
@@ -476,67 +511,4 @@ Item {
         if (moveMouse)
             moveMouseTo(selectedIndex);
     }
-
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        onExited: {
-            globalStore.statusMessage = '';
-
-            if (openedSubmenuIndex > -1) {
-                if (blockSubmenuClose) {
-                    selectedIndex = openedSubmenuIndex;
-
-                    // If the user moved to a submenu, make sure the
-                    // blockSubmenuClose reset timer doesn't close their
-                    // submenu when the timer runs out
-                    attemptedSelectedIndex = selectedIndex;
-
-                    return;
-                }
-                else {
-                    closeSubmenus(id);
-                    openedSubmenuIndex = -1;
-                }
-            }
-
-            selectedIndex = -1;
-        }
-
-        onWheel: {
-            if (openedSubmenuIndex > -1) {
-                moveMouseToSubmenu(id);
-                return;
-            }
-
-            let direction = wheel.angleDelta.y < 0 ? -1 : 1;
-            incrementIndex(direction, true);
-        }
-
-        Row {
-            id: menuMouseAreas
-
-            Repeater {
-                id: menuMouseAreasRepeater
-                model: _processedMenuItems
-                MenuColumnMouseAreas {
-                    columnItems: modelData
-                    startIndex: getStartIndex(index)
-                }
-            }
-        }
-    }
-
-//    Rectangle {
-//        id: mask
-//        anchors.fill: parent
-//        radius: 6
-//        visible: false
-//    }
-
-//    OpacityMask {
-//        anchors.fill: parent
-//        source: menuContent
-//        maskSource: mask
-//    }
 }
